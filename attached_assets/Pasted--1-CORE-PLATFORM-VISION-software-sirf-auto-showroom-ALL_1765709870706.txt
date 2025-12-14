@@ -1,0 +1,402 @@
+🧱 1. CORE PLATFORM VISION
+
+ये software sirf auto showroom नहीं,
+बल्कि ALL BUSINESS FIELDS (real estate, service, agency, shop, IT, etc.) के लिए हो
+
+Master Admin किसी भी company के लिए अलग website / UI configure कर सके
+
+Platform SaaS model में sell-ready हो
+
+👑 2. USER ROLES (VERY IMPORTANT)
+🔹 Master Admin (Super Power)
+
+Unlimited companies create करे
+
+Har company ka:
+
+Website layout
+
+Homepage content
+
+Pricing
+
+Features enable/disable
+
+Global control:
+
+Payments
+
+Revenue
+
+Analytics
+
+Plans
+
+White-label
+
+Company-wise:
+
+API keys
+
+Lead routing
+
+Master Admin ka username change option
+
+Master Admin ka branding:
+
+❌ App ke andar nahi dikhe
+
+✅ Sirf MASTER ke personal page pe dikhe:
+
+Name: Next-Gen Digital Solutions
+
+Footer: Made by Next-Gen Digital Solutions (clickable → master homepage)
+
+🔹 Company Admin (Business Owner)
+
+Sirf apni company manage kare
+
+Apni website ka:
+
+Home
+
+About
+
+Features
+
+Pricing
+
+Contact
+
+Sales persons manage kare
+
+Leads dekhe (sirf apni company ke)
+
+Payments kare / plan upgrade kare
+
+Limited controls (master defined)
+
+🔹 Sales Person (NEW REQUIREMENT)
+
+Separate login
+
+Sirf apne leads dekhe
+
+Khud se:
+
+Lead data update
+
+Follow-up date/time set
+
+Remarks add
+
+Call schedule manage kare
+
+Missed follow-up pe:
+
+Auto reminder
+
+Notification
+
+🏢 3. COMPANY SYSTEM (MULTI-TENANT)
+
+Har company ka:
+
+Alag website
+
+Alag pages
+
+Alag branding
+
+Alag APIs
+
+Company A ka lead kabhi Company B ya Master ko na jaye
+
+URL example:
+
+platform.com/company/xyz
+
+Custom domain support (PRO)
+
+🌐 4. WEBSITE PAGES (GLOBAL + COMPANY WISE)
+Platform (Master side)
+
+Home
+
+About Us
+
+Features
+
+Privacy Policy
+
+Terms & Conditions
+
+Company Websites
+
+Home
+
+About Us
+
+Features
+
+Pricing
+
+Contact
+
+Privacy Policy
+
+Terms
+
+Authentic & professional look
+
+💼 5. DIGITAL VISITING CARD SYSTEM
+
+Unlimited cards (plan based)
+
+Each sales person ka:
+
+Public profile
+
+QR Code auto generate
+
+Actions:
+
+Call
+
+WhatsApp
+
+Email
+
+Visitor ko:
+
+Pehele apna number dalna pade
+
+Tabhi call connect ho
+
+📞 6. LEAD MANAGEMENT (ADVANCED)
+Lead Sources
+
+Card visits
+
+WhatsApp clicks
+
+Call requests
+
+Email clicks
+
+Contact form
+
+External APIs
+
+Lead Data
+
+Name
+
+Phone
+
+Source
+
+Time
+
+IP
+
+Company
+
+Assigned sales person
+
+Remarks
+
+Status (Hot / Warm / Cold – future AI)
+
+Access Rules
+
+Sales person → sirf apne leads
+
+Company admin → apni company ke sab
+
+Master admin → sab
+
+🔔 7. FOLLOW-UP & NOTIFICATIONS
+
+Follow-up date & time
+
+Missed follow-up alert
+
+Sales person notification
+
+Future: WhatsApp / Email reminder
+
+💳 8. PAYMENT SYSTEM (CRITICAL)
+Plans
+
+Free → 7 days
+
+Basic → 30 days
+
+Pro → 365 days
+
+Rules
+
+❌ Bina payment verify hue upgrade nahi
+
+✅ Paytm checksum verification
+
+Plan expiry system
+
+Auto downgrade on expiry
+
+DB Fields
+
+plan_expiry_date
+
+payment_status
+
+transaction_id
+
+invoice
+
+🔐 9. SECURITY RULES
+
+No demo / simulate payment in production
+
+No hardcoded login
+
+No auto upgrade
+
+Role-based access strict
+
+📊 10. DASHBOARDS
+Sales Person
+
+Assigned leads
+
+Follow-ups
+
+Call history
+
+Company Admin
+
+Cards count
+
+Views
+
+Leads
+
+Plan expiry
+
+Sales performance
+
+Master Admin
+
+Total companies
+
+Revenue
+
+Active plans
+
+Usage analytics
+
+API usage
+
+🔗 11. EXTERNAL LEAD INTEGRATION (IMPORTANT)
+Master Admin Panel
+
+Company-wise API config
+
+API key / webhook URL input
+
+Integrations
+
+Google Ads
+
+Facebook Lead Ads
+
+External portals
+
+Each company ka alag API
+
+🎨 12. UI & THEMING
+
+Universal UI (sab fields ke liye)
+
+Theme selector:
+
+Dark / Light
+
+Color picker
+
+Font style
+
+Card themes
+
+Company-wise branding
+
+📤 13. EXPORT & REPORTS
+
+Leads export:
+
+CSV
+
+Excel
+
+Date range
+
+Sales person wise
+
+🏷️ 14. WHITE-LABEL
+
+PRO users ke liye
+
+Platform branding hide
+
+Apna logo + footer
+
+🧠 15. FUTURE / OPTIONAL
+
+AI bio generator
+
+Lead quality score
+
+Auto reply messages
+
+🧾 16. MASTER PERSONAL SHOWCASE (NEW)
+
+Master ka personal page
+
+Shows:
+
+Kis-kis company ke saath kaam kar raha
+
+Project details
+
+Demo showcase
+
+Ye page new customers ko dikhane ke liye
+
+🛠️ 17. TECH RULES (STRICT)
+
+Flask
+
+SQLite (persistent)
+
+Proper templates folder
+
+No missing routes
+
+No broken pages
+
+Replit compatible
+
+One-click run
+
+🚫 18. PAST MISTAKES (DO NOT REPEAT)
+
+❌ Missing templates folder
+
+❌ Pages not found
+
+❌ Master admin without control
+
+❌ Replit guessing logic
+
+❌ Half-working features

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}Portfolio{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold">{{ settings['showcase_title'] if settings and settings['showcase_title'] else 'Our Portfolio' }}</h1>
+        <p class="lead text-muted">{{ settings['showcase_description'] if settings and settings['showcase_description'] else 'Trusted by businesses across industries' }}</p>
+    </div>
+    {% if projects %}
+    <h3 class="mb-4">Featured Projects</h3>
+    <div class="row g-4 mb-5">
+        {% for project in projects %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm">
+                {% if project['image_url'] %}
+                <img src="{{ project['image_url'] }}" class="card-img-top" alt="{{ project['title'] }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ project['title'] }}</h5>
+                    <p class="card-text text-muted">{{ project['description'] }}</p>
+                    {% if project['demo_url'] %}
+                    <a href="{{ project['demo_url'] }}" class="btn btn-outline-primary btn-sm" target="_blank">View Demo</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% if companies %}
+    <h3 class="mb-4">Companies Using Our Platform</h3>
+    <div class="row g-4">
+        {% for company in companies %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ company['name'] }}</h5>
+                    <p class="card-text text-muted small">{{ company['homepage_subtitle'] or 'Business Partner' }}</p>
+                    <a href="{{ url_for('public.company_home', slug=company['slug']) }}" class="btn btn-outline-primary btn-sm">Visit Website</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% if not projects and not companies %}
+    <div class="text-center py-5">
+        <i class="bi bi-briefcase text-muted" style="font-size: 4rem;"></i>
+        <p class="text-muted mt-3">Portfolio projects coming soon!</p>
+    </div>
+    {% endif %}
+    <div class="text-center mt-5 py-5 bg-light rounded">
+        <h3>{{ settings['master_name'] if settings and settings['master_name'] else 'Next-Gen Digital Solutions' }}</h3>
+        <p class="text-muted">{{ settings['master_footer'] if settings and settings['master_footer'] else 'Made by Next-Gen Digital Solutions' }}</p>
+    </div>
+</div>
+{% endblock %}

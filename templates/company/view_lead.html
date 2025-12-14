@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Lead: {{ lead.name or lead.phone }}{% endblock %}
+{% block content %}
+<div class="container py-4">
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header"><h5 class="mb-0">Lead Details</h5></div>
+                <div class="card-body">
+                    <p><strong>Name:</strong> {{ lead.name or '-' }}</p>
+                    <p><strong>Phone:</strong> <a href="tel:{{ lead.phone }}">{{ lead.phone }}</a></p>
+                    <p><strong>Email:</strong> {{ lead.email or '-' }}</p>
+                    <p><strong>Source:</strong> <span class="badge bg-secondary">{{ lead.source }}</span></p>
+                    <p><strong>Status:</strong> <span class="badge bg-{{ 'success' if lead.status == 'converted' else 'danger' if lead.status == 'closed' else 'primary' }}">{{ lead.status }}</span></p>
+                    <p><strong>Created:</strong> {{ lead.created_at }}</p>
+                    <p><strong>Last Contacted:</strong> {{ lead.last_contacted or 'Never' }}</p>
+                    <p><strong>Follow-up:</strong> {{ lead.follow_up_date or 'Not scheduled' }}</p>
+                    <hr>
+                    <p><strong>Remarks:</strong><br>{{ lead.remarks or 'No remarks' }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">Assign to Sales Person</div>
+                <div class="card-body">
+                    <form method="post" action="{{ url_for('company.assign_lead', id=lead.id) }}">
+                        <div class="input-group">
+                            <select name="sales_person_id" class="form-select">
+                                <option value="">Select Sales Person</option>
+                                {% for sp in sales_persons %}
+                                <option value="{{ sp.id }}" {{ 'selected' if sp.id == lead.assigned_to else '' }}>{{ sp.username }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit" class="btn btn-primary">Assign</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">Call History</div>
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0">
+                        <thead><tr><th>Date</th><th>Type</th><th>Duration</th><th>By</th></tr></thead>
+                        <tbody>
+                        {% for call in call_history %}
+                        <tr>
+                            <td>{{ call.created_at[:10] }}</td>
+                            <td>{{ call.call_type }}</td>
+                            <td>{{ call.duration or '-' }} min</td>
+                            <td>{{ call.username }}</td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="4" class="text-center text-muted">No calls logged</td></tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

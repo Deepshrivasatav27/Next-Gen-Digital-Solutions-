@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Follow-ups{% endblock %}
+{% block content %}
+<div class="container-fluid py-4">
+    <h2 class="mb-4">Follow-ups</h2>
+    {% if missed_followups %}
+    <div class="card mb-4 border-danger">
+        <div class="card-header bg-danger text-white">Missed Follow-ups ({{ missed_followups|length }})</div>
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead><tr><th>Name</th><th>Phone</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody>
+                {% for lead in missed_followups %}
+                <tr>
+                    <td>{{ lead.name or '-' }}</td>
+                    <td><a href="tel:{{ lead.phone }}">{{ lead.phone }}</a></td>
+                    <td class="text-danger">{{ lead.follow_up_date[:10] if lead.follow_up_date else '-' }}</td>
+                    <td><span class="badge bg-secondary">{{ lead.status }}</span></td>
+                    <td><a href="{{ url_for('sales.view_lead', id=lead.id) }}" class="btn btn-sm btn-outline-danger">Update</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">Today's Follow-ups ({{ today_followups|length }})</div>
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead><tr><th>Name</th><th>Phone</th><th>Time</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody>
+                {% for lead in today_followups %}
+                <tr>
+                    <td>{{ lead.name or '-' }}</td>
+                    <td><a href="tel:{{ lead.phone }}">{{ lead.phone }}</a></td>
+                    <td>{{ lead.follow_up_time or '-' }}</td>
+                    <td><span class="badge bg-secondary">{{ lead.status }}</span></td>
+                    <td><a href="{{ url_for('sales.view_lead', id=lead.id) }}" class="btn btn-sm btn-outline-primary">View</a></td>
+                </tr>
+                {% else %}
+                <tr><td colspan="5" class="text-center text-muted">No follow-ups today</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">Upcoming Follow-ups</div>
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead><tr><th>Name</th><th>Phone</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody>
+                {% for lead in upcoming_followups %}
+                <tr>
+                    <td>{{ lead.name or '-' }}</td>
+                    <td><a href="tel:{{ lead.phone }}">{{ lead.phone }}</a></td>
+                    <td>{{ lead.follow_up_date[:10] if lead.follow_up_date else '-' }}</td>
+                    <td><span class="badge bg-secondary">{{ lead.status }}</span></td>
+                    <td><a href="{{ url_for('sales.view_lead', id=lead.id) }}" class="btn btn-sm btn-outline-primary">View</a></td>
+                </tr>
+                {% else %}
+                <tr><td colspan="5" class="text-center text-muted">No upcoming follow-ups</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

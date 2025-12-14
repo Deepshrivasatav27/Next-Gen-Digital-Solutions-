@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Call History{% endblock %}
+{% block content %}
+<div class="container-fluid py-4">
+    <h2 class="mb-4">Call History</h2>
+    <div class="card">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead><tr><th>Date</th><th>Lead</th><th>Phone</th><th>Type</th><th>Duration</th><th>Notes</th></tr></thead>
+                <tbody>
+                {% for call in calls %}
+                <tr>
+                    <td>{{ call.created_at[:16] }}</td>
+                    <td>{{ call.name or '-' }}</td>
+                    <td><a href="tel:{{ call.phone }}">{{ call.phone }}</a></td>
+                    <td>{{ call.call_type }}</td>
+                    <td>{{ call.duration or '-' }} min</td>
+                    <td>{{ (call.notes[:50] + '...') if call.notes and call.notes|length > 50 else call.notes or '-' }}</td>
+                </tr>
+                {% else %}
+                <tr><td colspan="6" class="text-center text-muted py-4">No calls logged yet</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

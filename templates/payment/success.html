@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Payment Successful{% endblock %}
+{% block content %}
+<div class="container py-5 text-center">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body py-5">
+                    <i class="bi bi-check-circle-fill display-1 text-success mb-4"></i>
+                    <h2>Payment Successful!</h2>
+                    <p class="text-muted">Your payment has been processed successfully.</p>
+                    <div class="bg-light p-3 rounded my-4">
+                        <p class="mb-1"><strong>Order ID:</strong> {{ order_id }}</p>
+                        <p class="mb-1"><strong>Amount:</strong> ₹{{ amount }}</p>
+                        <p class="mb-0"><strong>Plan:</strong> {{ plan_name }}</p>
+                    </div>
+                    <p class="small text-muted mb-4">Your plan has been activated. An invoice has been sent to your email.</p>
+                    <a href="{{ url_for('company.dashboard') }}" class="btn btn-primary">Go to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

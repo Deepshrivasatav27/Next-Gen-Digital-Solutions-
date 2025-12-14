@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Companies{% endblock %}
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Companies</h2>
+        <a href="{{ url_for('master.create_company') }}" class="btn btn-primary">Create Company</a>
+    </div>
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-10">
+                    <input type="text" name="search" class="form-control" placeholder="Search companies..." value="{{ search }}">
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-outline-primary w-100">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead><tr><th>Name</th><th>Email</th><th>Plan</th><th>Expiry</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody>
+                {% for c in companies %}
+                <tr>
+                    <td>{{ c.name }}</td>
+                    <td>{{ c.email or '-' }}</td>
+                    <td><span class="badge bg-{{ 'success' if c.plan == 'pro' else 'primary' if c.plan == 'basic' else 'secondary' }}">{{ c.plan }}</span></td>
+                    <td>{{ c.plan_expiry_date[:10] if c.plan_expiry_date else '-' }}</td>
+                    <td><span class="badge bg-{{ 'success' if c.is_active else 'danger' }}">{{ 'Active' if c.is_active else 'Inactive' }}</span></td>
+                    <td>
+                        <a href="{{ url_for('master.view_company', id=c.id) }}" class="btn btn-sm btn-outline-primary">View</a>
+                        <a href="{{ url_for('master.edit_company', id=c.id) }}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="6" class="text-center text-muted py-4">No companies found</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% if total_pages > 1 %}
+    <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% for p in range(1, total_pages + 1) %}
+            <li class="page-item {{ 'active' if p == page else '' }}">
+                <a class="page-link" href="?page={{ p }}&search={{ search }}">{{ p }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+{% endblock %}

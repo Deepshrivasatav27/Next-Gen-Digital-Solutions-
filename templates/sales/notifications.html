@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Notifications{% endblock %}
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Notifications</h2>
+        <form method="post" action="{{ url_for('sales.mark_all_read') }}">
+            <button type="submit" class="btn btn-outline-primary">Mark All Read</button>
+        </form>
+    </div>
+    <div class="list-group">
+        {% for notif in notifications %}
+        <div class="list-group-item list-group-item-action {{ '' if notif.is_read else 'list-group-item-light' }}">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ notif.title }}</h5>
+                <small>{{ notif.created_at[:16] }}</small>
+            </div>
+            <p class="mb-1">{{ notif.message }}</p>
+            {% if not notif.is_read %}
+            <form method="post" action="{{ url_for('sales.mark_notification_read', id=notif.id) }}" class="mt-2">
+                <button type="submit" class="btn btn-sm btn-outline-primary">{{ 'View & Mark Read' if notif.link else 'Mark Read' }}</button>
+            </form>
+            {% endif %}
+        </div>
+        {% else %}
+        <div class="list-group-item text-center text-muted py-4">No notifications</div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

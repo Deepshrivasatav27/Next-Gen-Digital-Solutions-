@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Leads{% endblock %}
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Leads</h2>
+        <div>
+            <a href="{{ url_for('company.export_leads', format='csv') }}" class="btn btn-outline-primary">Export CSV</a>
+            <a href="{{ url_for('company.export_leads', format='excel') }}" class="btn btn-outline-success">Export Excel</a>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-3">
+                    <select name="source" class="form-select">
+                        <option value="">All Sources</option>
+                        <option value="website" {{ 'selected' if selected_source == 'website' else '' }}>Website</option>
+                        <option value="card" {{ 'selected' if selected_source == 'card' else '' }}>Visiting Card</option>
+                        <option value="api" {{ 'selected' if selected_source == 'api' else '' }}>API</option>
+                        <option value="manual" {{ 'selected' if selected_source == 'manual' else '' }}>Manual</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select name="status" class="form-select">
+                        <option value="">All Statuses</option>
+                        <option value="new" {{ 'selected' if selected_status == 'new' else '' }}>New</option>
+                        <option value="contacted" {{ 'selected' if selected_status == 'contacted' else '' }}>Contacted</option>
+                        <option value="interested" {{ 'selected' if selected_status == 'interested' else '' }}>Interested</option>
+                        <option value="converted" {{ 'selected' if selected_status == 'converted' else '' }}>Converted</option>
+                        <option value="closed" {{ 'selected' if selected_status == 'closed' else '' }}>Closed</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select name="assigned_to" class="form-select">
+                        <option value="">All Sales Persons</option>
+                        {% for sp in sales_persons %}
+                        <option value="{{ sp.id }}" {{ 'selected' if sp.id == selected_assigned_to else '' }}>{{ sp.username }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary w-100">Filter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead><tr><th>Name</th><th>Phone</th><th>Source</th><th>Status</th><th>Assigned To</th><th>Created</th><th>Actions</th></tr></thead>
+                <tbody>
+                {% for lead in leads %}
+                <tr>
+                    <td>{{ lead.name or '-' }}</td>
+                    <td>{{ lead.phone }}</td>
+                    <td><span class="badge bg-secondary">{{ lead.source }}</span></td>
+                    <td><span class="badge bg-{{ 'success' if lead.status == 'converted' else 'danger' if lead.status == 'closed' else 'primary' if lead.status == 'interested' else 'info' }}">{{ lead.status }}</span></td>
+                    <td>{{ lead.assigned_username or 'Unassigned' }}</td>
+                    <td>{{ lead.created_at[:10] }}</td>
+                    <td><a href="{{ url_for('company.view_lead', id=lead.id) }}" class="btn btn-sm btn-outline-primary">View</a></td>
+                </tr>
+                {% else %}
+                <tr><td colspan="7" class="text-center text-muted py-4">No leads found</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

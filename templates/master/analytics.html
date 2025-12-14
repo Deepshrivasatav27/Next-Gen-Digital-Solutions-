@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Analytics{% endblock %}
+{% block content %}
+<div class="container-fluid py-4">
+    <h2 class="mb-4">Analytics</h2>
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Leads by Month</div>
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0">
+                        <thead><tr><th>Month</th><th>Leads</th></tr></thead>
+                        <tbody>
+                        {% for item in leads_by_month %}
+                        <tr>
+                            <td>{{ item.month }}</td>
+                            <td>{{ item.count }}</td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="2" class="text-center text-muted">No data</td></tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Revenue by Month</div>
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0">
+                        <thead><tr><th>Month</th><th>Revenue</th></tr></thead>
+                        <tbody>
+                        {% for item in revenue_by_month %}
+                        <tr>
+                            <td>{{ item.month }}</td>
+                            <td>₹{{ "%.2f"|format(item.total or 0) }}</td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="2" class="text-center text-muted">No data</td></tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Leads by Source</div>
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0">
+                        <thead><tr><th>Source</th><th>Count</th></tr></thead>
+                        <tbody>
+                        {% for item in leads_by_source %}
+                        <tr>
+                            <td>{{ item.source }}</td>
+                            <td>{{ item.count }}</td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="2" class="text-center text-muted">No data</td></tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Branding Settings{% endblock %}
+{% block content %}
+<div class="container py-4">
+    <h2 class="mb-4">Branding Settings</h2>
+    <form method="post">
+        <div class="card mb-4">
+            <div class="card-header">Theme</div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Theme Mode</label>
+                        <select name="theme_mode" class="form-select">
+                            <option value="light" {{ 'selected' if company.theme_mode == 'light' else '' }}>Light</option>
+                            <option value="dark" {{ 'selected' if company.theme_mode == 'dark' else '' }}>Dark</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Primary Color</label>
+                        <input type="color" name="primary_color" class="form-control form-control-color w-100" value="{{ company.primary_color or '#4F46E5' }}">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Secondary Color</label>
+                        <input type="color" name="secondary_color" class="form-control form-control-color w-100" value="{{ company.secondary_color or '#10B981' }}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="form-label">Font Family</label>
+                        <select name="font_family" class="form-select">
+                            <option value="Inter" {{ 'selected' if company.font_family == 'Inter' else '' }}>Inter</option>
+                            <option value="Roboto" {{ 'selected' if company.font_family == 'Roboto' else '' }}>Roboto</option>
+                            <option value="Poppins" {{ 'selected' if company.font_family == 'Poppins' else '' }}>Poppins</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Card Theme</label>
+                        <select name="card_theme" class="form-select">
+                            <option value="modern" {{ 'selected' if company.card_theme == 'modern' else '' }}>Modern</option>
+                            <option value="classic" {{ 'selected' if company.card_theme == 'classic' else '' }}>Classic</option>
+                            <option value="minimal" {{ 'selected' if company.card_theme == 'minimal' else '' }}>Minimal</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if company.white_label_enabled %}
+        <div class="card mb-4">
+            <div class="card-header">White Label</div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Custom Logo URL</label>
+                    <input type="url" name="custom_logo" class="form-control" value="{{ company.custom_logo or '' }}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Custom Footer Text</label>
+                    <input type="text" name="custom_footer" class="form-control" value="{{ company.custom_footer or '' }}">
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="alert alert-info">White label features are available on Pro plan. <a href="{{ url_for('company.plan') }}">Upgrade now</a></div>
+        {% endif %}
+        <button type="submit" class="btn btn-primary">Save Branding</button>
+    </form>
+</div>
+{% endblock %}

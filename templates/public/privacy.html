@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Privacy Policy{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="fw-bold mb-4">Privacy Policy</h1>
+            {% if settings and settings['privacy_policy'] %}
+            <div>{{ settings['privacy_policy'] | safe }}</div>
+            {% else %}
+            <p class="lead">Your privacy is important to us.</p>
+            <h4 class="mt-4">Information We Collect</h4>
+            <p>We collect information you provide directly to us, such as when you create an account, make a purchase, or contact us for support.</p>
+            <h4 class="mt-4">How We Use Your Information</h4>
+            <p>We use the information we collect to provide, maintain, and improve our services, process transactions, and communicate with you.</p>
+            <h4 class="mt-4">Data Security</h4>
+            <p>We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.</p>
+            <h4 class="mt-4">Contact Us</h4>
+            <p>If you have any questions about this Privacy Policy, please contact us.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

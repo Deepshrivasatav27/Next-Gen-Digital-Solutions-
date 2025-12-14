@@ -1,0 +1,38 @@
+<footer class="bg-dark text-light py-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <h5 class="fw-bold mb-3">{{ master_settings['platform_name'] if master_settings else 'Platform' }}</h5>
+                <p class="text-muted">{{ master_settings['platform_tagline'] if master_settings else 'All-in-One Business Platform' }}</p>
+            </div>
+            <div class="col-md-2 mb-4">
+                <h6 class="fw-bold mb-3">Platform</h6>
+                <ul class="list-unstyled">
+                    <li><a href="{{ url_for('public.home') }}" class="text-muted text-decoration-none">Home</a></li>
+                    <li><a href="{{ url_for('public.about') }}" class="text-muted text-decoration-none">About</a></li>
+                    <li><a href="{{ url_for('public.features') }}" class="text-muted text-decoration-none">Features</a></li>
+                </ul>
+            </div>
+            <div class="col-md-2 mb-4">
+                <h6 class="fw-bold mb-3">Legal</h6>
+                <ul class="list-unstyled">
+                    <li><a href="{{ url_for('public.privacy') }}" class="text-muted text-decoration-none">Privacy Policy</a></li>
+                    <li><a href="{{ url_for('public.terms') }}" class="text-muted text-decoration-none">Terms</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4 mb-4">
+                <h6 class="fw-bold mb-3">Contact</h6>
+                <p class="text-muted"><i class="bi bi-envelope me-2"></i>support@platform.com</p>
+            </div>
+        </div>
+        <hr class="border-secondary">
+        <div class="row">
+            <div class="col-md-6"><p class="text-muted mb-0">&copy; {{ current_year }} All rights reserved.</p></div>
+            <div class="col-md-6 text-md-end">
+                {% if master_settings and master_settings['master_footer'] %}
+                <a href="{{ master_settings['master_homepage_url'] or url_for('public.showcase') }}" class="text-muted text-decoration-none">{{ master_settings['master_footer'] }}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</footer>

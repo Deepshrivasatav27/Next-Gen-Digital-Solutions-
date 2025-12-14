@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Plan & Billing{% endblock %}
+{% block content %}
+<div class="container py-4">
+    <h2 class="mb-4">Plan & Billing</h2>
+    <div class="card mb-4">
+        <div class="card-header">Current Plan</div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4><span class="badge bg-{{ 'success' if company.plan == 'pro' else 'primary' if company.plan == 'basic' else 'secondary' }} fs-5">{{ current_plan.name }}</span></h4>
+                    <p><strong>Cards Limit:</strong> {{ current_plan.cards_limit if current_plan.cards_limit != -1 else 'Unlimited' }}</p>
+                    <p><strong>White Label:</strong> {{ 'Yes' if current_plan.white_label else 'No' }}</p>
+                    <p><strong>Expires:</strong> {{ company.plan_expiry_date[:10] if company.plan_expiry_date else 'N/A' }}</p>
+                    <p><strong>Days Remaining:</strong> {{ days_remaining }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h4 class="mb-3">Available Plans</h4>
+    <div class="row g-4 mb-4">
+        {% for key, plan in plans.items() %}
+        <div class="col-md-4">
+            <div class="card h-100 {{ 'border-primary' if key == company.plan else '' }}">
+                <div class="card-header text-center {{ 'bg-primary text-white' if key == company.plan else '' }}">
+                    <h5 class="mb-0">{{ plan.name }}</h5>
+                </div>
+                <div class="card-body text-center">
+                    <h2 class="mb-0">₹{{ plan.price }}</h2>
+                    <p class="text-muted">{{ plan.days }} days</p>
+                    <hr>
+                    <p>{{ plan.cards_limit if plan.cards_limit != -1 else 'Unlimited' }} cards</p>
+                    <p>{{ 'White Label Included' if plan.white_label else 'Standard Branding' }}</p>
+                    {% if key != company.plan and key != 'free' %}
+                    <a href="{{ url_for('payment.initiate', plan=key) }}" class="btn btn-primary w-100">Upgrade</a>
+                    {% elif key == company.plan %}
+                    <button class="btn btn-outline-success w-100" disabled>Current Plan</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="card">
+        <div class="card-header">Payment History</div>
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead><tr><th>Order ID</th><th>Plan</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+                <tbody>
+                {% for p in payments %}
+                <tr>
+                    <td><code>{{ p.order_id }}</code></td>
+                    <td>{{ p.plan_type }}</td>
+                    <td>₹{{ "%.2f"|format(p.amount) }}</td>
+                    <td><span class="badge bg-{{ 'success' if p.status == 'success' else 'danger' if p.status == 'failed' else 'warning' }}">{{ p.status }}</span></td>
+                    <td>{{ p.created_at[:10] }}</td>
+                </tr>
+                {% else %}
+                <tr><td colspan="5" class="text-center text-muted">No payment history</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold text-primary" href="{{ url_for('public.home') }}">
+            <i class="bi bi-layers me-2"></i>{{ master_settings['platform_name'] if master_settings else 'Platform' }}
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('public.home') }}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('public.about') }}">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('public.features') }}">Features</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('public.showcase') }}">Portfolio</a></li>
+            </ul>
+            <ul class="navbar-nav">
+                {% if current_user %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle me-1"></i>{{ current_user['username'] }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        {% if current_user['role'] == 'master_admin' %}
+                        <li><a class="dropdown-item" href="{{ url_for('master.dashboard') }}"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a></li>
+                        {% elif current_user['role'] == 'company_admin' %}
+                        <li><a class="dropdown-item" href="{{ url_for('company.dashboard') }}"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a></li>
+                        {% else %}
+                        <li><a class="dropdown-item" href="{{ url_for('sales.dashboard') }}"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a></li>
+                        {% endif %}
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="{{ url_for('auth.auth_logout') }}"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.auth_login') }}">Login</a></li>
+                <li class="nav-item"><a class="btn btn-primary ms-2" href="{{ url_for('auth.auth_register') }}">Get Started</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

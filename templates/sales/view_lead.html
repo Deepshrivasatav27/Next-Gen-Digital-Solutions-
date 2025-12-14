@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %}Lead: {{ lead.name or lead.phone }}{% endblock %}
+{% block content %}
+<div class="container py-4">
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header"><h5 class="mb-0">Lead Details</h5></div>
+                <div class="card-body">
+                    <form method="post" action="{{ url_for('sales.update_lead', id=lead.id) }}">
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" name="name" class="form-control" value="{{ lead.name or '' }}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Phone</label>
+                            <input type="tel" class="form-control" value="{{ lead.phone }}" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" value="{{ lead.email or '' }}">
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Status</label>
+                                <select name="status" class="form-select">
+                                    <option value="new" {{ 'selected' if lead.status == 'new' else '' }}>New</option>
+                                    <option value="contacted" {{ 'selected' if lead.status == 'contacted' else '' }}>Contacted</option>
+                                    <option value="interested" {{ 'selected' if lead.status == 'interested' else '' }}>Interested</option>
+                                    <option value="converted" {{ 'selected' if lead.status == 'converted' else '' }}>Converted</option>
+                                    <option value="closed" {{ 'selected' if lead.status == 'closed' else '' }}>Closed</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Source</label>
+                                <input type="text" class="form-control" value="{{ lead.source }}" disabled>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Follow-up Date</label>
+                                <input type="date" name="follow_up_date" class="form-control" value="{{ lead.follow_up_date[:10] if lead.follow_up_date else '' }}">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Follow-up Time</label>
+                                <input type="time" name="follow_up_time" class="form-control" value="{{ lead.follow_up_time or '' }}">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Remarks</label>
+                            <textarea name="remarks" class="form-control" rows="3">{{ lead.remarks or '' }}</textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Lead</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">Quick Actions</div>
+                <div class="card-body">
+                    <a href="tel:{{ lead.phone }}" class="btn btn-success me-2">Call</a>
+                    <a href="https://wa.me/{{ lead.phone|replace('+', '') }}" target="_blank" class="btn btn-success">WhatsApp</a>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header">Log Call</div>
+                <div class="card-body">
+                    <form method="post" action="{{ url_for('sales.log_call', id=lead.id) }}">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Call Type</label>
+                                <select name="call_type" class="form-select">
+                                    <option value="outgoing">Outgoing</option>
+                                    <option value="incoming">Incoming</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Duration (min)</label>
+                                <input type="number" name="duration" class="form-control" min="0">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Notes</label>
+                            <textarea name="notes" class="form-control" rows="2"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Log Call</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">Call History</div>
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0">
+                        <thead><tr><th>Date</th><th>Type</th><th>Duration</th><th>Notes</th></tr></thead>
+                        <tbody>
+                        {% for call in call_history %}
+                        <tr>
+                            <td>{{ call.created_at[:10] }}</td>
+                            <td>{{ call.call_type }}</td>
+                            <td>{{ call.duration or '-' }} min</td>
+                            <td>{{ (call.notes[:30] + '...') if call.notes and call.notes|length > 30 else call.notes or '-' }}</td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="4" class="text-center text-muted">No calls logged</td></tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

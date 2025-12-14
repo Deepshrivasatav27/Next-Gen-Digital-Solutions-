@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% block title %}{{ settings['platform_name'] if settings else 'Business Platform' }} - Home{% endblock %}
+{% block content %}
+<section class="hero-section bg-primary text-white py-5">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">{{ settings['platform_name'] if settings else 'Business Platform' }}</h1>
+                <p class="lead mb-4">{{ settings['homepage_content'] if settings and settings['homepage_content'] else 'Transform your business with our comprehensive digital solutions. Digital visiting cards, lead management, CRM, and more.' }}</p>
+                <div class="d-flex gap-3">
+                    <a href="{{ url_for('auth.auth_register') }}" class="btn btn-light btn-lg">Start Free Trial</a>
+                    <a href="{{ url_for('public.features') }}" class="btn btn-outline-light btn-lg">Learn More</a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <i class="bi bi-layers" style="font-size: 15rem; opacity: 0.3;"></i>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center fw-bold mb-5">Why Choose Us?</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-person-vcard text-primary" style="font-size: 3rem;"></i>
+                        <h5 class="mt-3">Digital Visiting Cards</h5>
+                        <p class="text-muted">Create professional digital cards with QR codes for your team</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-people text-primary" style="font-size: 3rem;"></i>
+                        <h5 class="mt-3">Lead Management</h5>
+                        <p class="text-muted">Track and manage leads from multiple sources in one place</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-graph-up text-primary" style="font-size: 3rem;"></i>
+                        <h5 class="mt-3">Analytics Dashboard</h5>
+                        <p class="text-muted">Get insights into your business performance</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bg-light py-5">
+    <div class="container">
+        <h2 class="text-center fw-bold mb-5">Pricing Plans</h2>
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4 text-center">
+                        <h5 class="text-muted">Free</h5>
+                        <h2 class="fw-bold">₹0</h2>
+                        <p class="text-muted">7 days trial</p>
+                        <hr>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="bi bi-check text-success me-2"></i>2 Visiting Cards</li>
+                            <li class="mb-2"><i class="bi bi-check text-success me-2"></i>Lead Management</li>
+                            <li class="mb-2"><i class="bi bi-check text-success me-2"></i>Basic Dashboard</li>
+                        </ul>
+                        <a href="{{ url_for('auth.auth_register') }}" class="btn btn-outline-primary w-100">Get Started</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-primary border-2 shadow">
+                    <div class="card-body p-4 text-center">
+                        <span class="badge bg-primary mb-2">Popular</span>
+                        <h5 class="text-muted">Basic</h5>
+                        <h2 class="fw-bold">₹499</h2>
+                        <p class="text-muted">30 days</p>
+                        <hr>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="bi bi-check text-success me-2"></i>10 Visiting Cards</li>
+                            <li class="mb-2"><i class="bi bi-check text-success me-2"></i>Advanced Lead Management</li>
+                            <li class="mb-2"><i class="bi bi-check text-success me-2"></i>Export Reports</li>
+                        </ul>
+                        <a href="{{ url_for('auth.auth_register') }}" class="btn btn-primary w-100">Get Started</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4 text-center">
+                        <h5 class="text-muted">Pro</h5>
+                        <h2 class="fw-bold">₹4,999</h2>
+                        <p class="text-muted">365 days</p>
+                        <hr>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="bi bi-check text-success me-2"></i>Unlimited Cards</li>
+                            <li class="mb-2"><i class="bi bi-check text-success me-2"></i>White-label Branding</li>
+                            <li class="mb-2"><i class="bi bi-check text-success me-2"></i>Custom Domain</li>
+                        </ul>
+                        <a href="{{ url_for('auth.auth_register') }}" class="btn btn-outline-primary w-100">Get Started</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

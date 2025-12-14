@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Features - {{ company.name }}{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">Our Features</h1>
+    <div class="content">{{ company.features_content|safe if company.features_content else 'Features content coming soon.' }}</div>
+</div>
+{% endblock %}

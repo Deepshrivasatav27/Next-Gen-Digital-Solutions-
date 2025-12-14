@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}{{ company.name }} - Home{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4">{{ company.homepage_title or company.name }}</h1>
+        <p class="lead text-muted">{{ company.homepage_subtitle or 'Welcome to our platform' }}</p>
+        <a href="{{ url_for('public.company_contact', slug=company.slug) }}" class="btn btn-primary btn-lg mt-3">Contact Us</a>
+    </div>
+</div>
+{% endblock %}

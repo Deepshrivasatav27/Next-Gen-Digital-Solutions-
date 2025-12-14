@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}API Keys - {{ company.name }}{% endblock %}
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>API Keys - {{ company.name }}</h2>
+        <a href="{{ url_for('master.view_company', id=company.id) }}" class="btn btn-outline-secondary">Back</a>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header">Create New API Key</div>
+        <div class="card-body">
+            <form method="post" class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Name</label>
+                    <input type="text" name="name" class="form-control" required placeholder="e.g., Website Integration">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Source Type</label>
+                    <select name="source_type" class="form-select">
+                        <option value="website">Website</option>
+                        <option value="landing_page">Landing Page</option>
+                        <option value="facebook">Facebook</option>
+                        <option value="google">Google Ads</option>
+                        <option value="justdial">JustDial</option>
+                        <option value="indiamart">IndiaMart</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">Generate Key</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">Existing API Keys</div>
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead><tr><th>Name</th><th>Key</th><th>Source</th><th>Usage</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody>
+                {% for key in api_keys %}
+                <tr>
+                    <td>{{ key.name }}</td>
+                    <td><code class="small">{{ key.key[:20] }}...</code></td>
+                    <td>{{ key.source_type }}</td>
+                    <td>{{ key.usage_count }}</td>
+                    <td><span class="badge bg-{{ 'success' if key.is_active else 'danger' }}">{{ 'Active' if key.is_active else 'Inactive' }}</span></td>
+                    <td>
+                        <form method="post" action="{{ url_for('master.toggle_api_key', company_id=company.id, key_id=key.id) }}" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-{{ 'warning' if key.is_active else 'success' }}">{{ 'Disable' if key.is_active else 'Enable' }}</button>
+                        </form>
+                        <form method="post" action="{{ url_for('master.delete_api_key', company_id=company.id, key_id=key.id) }}" class="d-inline" onsubmit="return confirm('Delete this API key?')">
+                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="6" class="text-center text-muted py-4">No API keys created yet</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Visiting Cards{% endblock %}
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Visiting Cards</h2>
+        <div>
+            <span class="badge bg-info fs-6 me-2">{{ cards_remaining if cards_remaining != float('inf') else 'Unlimited' }} remaining</span>
+            <a href="{{ url_for('company.create_card') }}" class="btn btn-primary">Create Card</a>
+        </div>
+    </div>
+    <div class="row g-4">
+        {% for card in cards %}
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ card.name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ card.designation or '' }}</h6>
+                    <p class="mb-1"><small>{{ card.phone }}</small></p>
+                    <p class="mb-1"><small>{{ card.email or '' }}</small></p>
+                    <p><small class="text-muted">Assigned to: {{ card.username or '-' }}</small></p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="badge bg-{{ 'success' if card.is_active else 'danger' }}">{{ 'Active' if card.is_active else 'Inactive' }}</span>
+                        <small class="text-muted">{{ card.views_count }} views</small>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('card.view_card', uid=card.uid) }}" target="_blank" class="btn btn-sm btn-outline-primary">Preview</a>
+                    <a href="{{ url_for('company.edit_card', id=card.id) }}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12 text-center text-muted py-5">
+            <p>No visiting cards created yet.</p>
+            <a href="{{ url_for('company.create_card') }}" class="btn btn-primary">Create First Card</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

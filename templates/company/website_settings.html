@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Website Settings{% endblock %}
+{% block content %}
+<div class="container py-4">
+    <h2 class="mb-4">Website Content Settings</h2>
+    <form method="post">
+        <div class="card mb-4">
+            <div class="card-header">Homepage</div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Title</label>
+                        <input type="text" name="homepage_title" class="form-control" value="{{ company.homepage_title or '' }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Subtitle</label>
+                        <input type="text" name="homepage_subtitle" class="form-control" value="{{ company.homepage_subtitle or '' }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-header">Page Content</div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">About Content</label>
+                    <textarea name="about_content" class="form-control" rows="4">{{ company.about_content or '' }}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Features Content</label>
+                    <textarea name="features_content" class="form-control" rows="4">{{ company.features_content or '' }}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Pricing Content</label>
+                    <textarea name="pricing_content" class="form-control" rows="4">{{ company.pricing_content or '' }}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Contact Content</label>
+                    <textarea name="contact_content" class="form-control" rows="4">{{ company.contact_content or '' }}</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-header">Legal Pages</div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Privacy Policy</label>
+                    <textarea name="privacy_policy" class="form-control" rows="4">{{ company.privacy_policy or '' }}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Terms & Conditions</label>
+                    <textarea name="terms_conditions" class="form-control" rows="4">{{ company.terms_conditions or '' }}</textarea>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Settings</button>
+    </form>
+</div>
+{% endblock %}

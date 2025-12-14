@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice #{{ payment.order_id }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: #f8f9fa; }
+        .invoice-box { max-width: 800px; margin: 40px auto; padding: 30px; background: white; box-shadow: 0 0 10px rgba(0,0,0,0.15); }
+        @media print { .invoice-box { box-shadow: none; } .no-print { display: none; } }
+    </style>
+</head>
+<body>
+    <div class="invoice-box">
+        <div class="row mb-4">
+            <div class="col-6">
+                <h2>{{ master_settings.platform_name if master_settings else 'SaaS Platform' }}</h2>
+                <p class="text-muted mb-0">{{ master_settings.platform_tagline if master_settings else '' }}</p>
+            </div>
+            <div class="col-6 text-end">
+                <h3>INVOICE</h3>
+                <p class="mb-0"><strong>Invoice #:</strong> {{ payment.order_id }}</p>
+                <p class="mb-0"><strong>Date:</strong> {{ payment.completed_at[:10] if payment.completed_at else payment.created_at[:10] }}</p>
+            </div>
+        </div>
+        <hr>
+        <div class="row mb-4">
+            <div class="col-6">
+                <h5>Bill To:</h5>
+                <p class="mb-0"><strong>{{ company.name }}</strong></p>
+                {% if company.email %}<p class="mb-0">{{ company.email }}</p>{% endif %}
+                {% if company.phone %}<p class="mb-0">{{ company.phone }}</p>{% endif %}
+                {% if company.address %}<p class="mb-0">{{ company.address }}</p>{% endif %}
+            </div>
+            <div class="col-6 text-end">
+                <h5>Payment Status:</h5>
+                <span class="badge bg-{{ 'success' if payment.status == 'success' else 'danger' }} fs-6">{{ payment.status|upper }}</span>
+            </div>
+        </div>
+        <table class="table">
+            <thead class="table-dark">
+                <tr><th>Description</th><th class="text-end">Amount</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <strong>{{ payment.plan_type|capitalize }} Plan Subscription</strong><br>
+                        <small class="text-muted">Valid for {{ plans[payment.plan_type].days if plans and payment.plan_type in plans else 30 }} days</small>
+                    </td>
+                    <td class="text-end">₹{{ "%.2f"|format(payment.amount) }}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th class="text-end">Total:</th>
+                    <th class="text-end">₹{{ "%.2f"|format(payment.amount) }}</th>
+                </tr>
+            </tfoot>
+        </table>
+        {% if payment.transaction_id %}
+        <p class="text-muted small">Transaction ID: {{ payment.transaction_id }}</p>
+        {% endif %}
+        <hr>
+        <p class="text-center text-muted small">Thank you for your business!</p>
+        <div class="text-center no-print mt-4">
+            <button onclick="window.print()" class="btn btn-primary">Print Invoice</button>
+            <a href="{{ url_for('company.plan') }}" class="btn btn-outline-secondary">Back to Plans</a>
+        </div>
+    </div>
+</body>
+</html>

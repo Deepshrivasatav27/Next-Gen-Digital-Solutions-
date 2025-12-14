@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - {{ company.name }}{% endblock %}
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>{{ company.name }} Dashboard</h2>
+        <span class="badge bg-{{ 'success' if company.plan == 'pro' else 'primary' if company.plan == 'basic' else 'secondary' }} fs-6">{{ plan_info.name }}</span>
+    </div>
+    {% if days_remaining <= 7 and company.plan != 'free' %}
+    <div class="alert alert-warning">Your plan expires in {{ days_remaining }} days. <a href="{{ url_for('company.plan') }}">Upgrade now</a></div>
+    {% endif %}
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Cards</h5>
+                    <h2 class="mb-0">{{ total_cards }}</h2>
+                    <small>of {{ company.cards_limit if company.cards_limit != -1 else 'Unlimited' }}</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Leads</h5>
+                    <h2 class="mb-0">{{ total_leads }}</h2>
+                    <small>{{ unassigned_leads }} unassigned</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Card Views</h5>
+                    <h2 class="mb-0">{{ total_views }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-dark">
+                <div class="card-body">
+                    <h5 class="card-title">Sales Persons</h5>
+                    <h2 class="mb-0">{{ total_sales }}</h2>
+                    <small>{{ today_leads }} leads today</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row g-4">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Recent Leads</span>
+                    <a href="{{ url_for('company.leads') }}" class="btn btn-sm btn-outline-primary">View All</a>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0">
+                        <thead><tr><th>Name</th><th>Phone</th><th>Source</th><th>Date</th></tr></thead>
+                        <tbody>
+                        {% for lead in recent_leads %}
+                        <tr>
+                            <td>{{ lead.name or '-' }}</td>
+                            <td>{{ lead.phone }}</td>
+                            <td><span class="badge bg-secondary">{{ lead.source }}</span></td>
+                            <td>{{ lead.created_at[:10] }}</td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="4" class="text-center text-muted">No leads yet</td></tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">Quick Actions</div>
+                <div class="card-body">
+                    <a href="{{ url_for('company.create_card') }}" class="btn btn-primary w-100 mb-2">Create New Card</a>
+                    <a href="{{ url_for('company.add_sales_person') }}" class="btn btn-outline-primary w-100 mb-2">Add Sales Person</a>
+                    <a href="{{ url_for('company.export_leads') }}" class="btn btn-outline-secondary w-100">Export Leads</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

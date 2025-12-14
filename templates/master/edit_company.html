@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block title %}Edit {{ company.name }}{% endblock %}
+{% block content %}
+<div class="container py-4">
+    <div class="card">
+        <div class="card-header"><h4 class="mb-0">Edit Company: {{ company.name }}</h4></div>
+        <div class="card-body">
+            <form method="post">
+                <ul class="nav nav-tabs mb-4" role="tablist">
+                    <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#basic">Basic Info</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#website">Website Content</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#branding">Branding</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="basic">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Company Name</label>
+                                <input type="text" name="name" class="form-control" value="{{ company.name }}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Custom Domain</label>
+                                <input type="text" name="custom_domain" class="form-control" value="{{ company.custom_domain or '' }}" placeholder="example.com">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Email</label>
+                                <input type="email" name="email" class="form-control" value="{{ company.email or '' }}">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Phone</label>
+                                <input type="tel" name="phone" class="form-control" value="{{ company.phone or '' }}">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Address</label>
+                            <textarea name="address" class="form-control" rows="2">{{ company.address or '' }}</textarea>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" name="is_active" class="form-check-input" id="is_active" {{ 'checked' if company.is_active else '' }}>
+                            <label class="form-check-label" for="is_active">Active</label>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="website">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Homepage Title</label>
+                                <input type="text" name="homepage_title" class="form-control" value="{{ company.homepage_title or '' }}">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Homepage Subtitle</label>
+                                <input type="text" name="homepage_subtitle" class="form-control" value="{{ company.homepage_subtitle or '' }}">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">About Content</label>
+                            <textarea name="about_content" class="form-control" rows="3">{{ company.about_content or '' }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Features Content</label>
+                            <textarea name="features_content" class="form-control" rows="3">{{ company.features_content or '' }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Pricing Content</label>
+                            <textarea name="pricing_content" class="form-control" rows="3">{{ company.pricing_content or '' }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Contact Content</label>
+                            <textarea name="contact_content" class="form-control" rows="3">{{ company.contact_content or '' }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Privacy Policy</label>
+                            <textarea name="privacy_policy" class="form-control" rows="4">{{ company.privacy_policy or '' }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Terms & Conditions</label>
+                            <textarea name="terms_conditions" class="form-control" rows="4">{{ company.terms_conditions or '' }}</textarea>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="branding">
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Theme Mode</label>
+                                <select name="theme_mode" class="form-select">
+                                    <option value="light" {{ 'selected' if company.theme_mode == 'light' else '' }}>Light</option>
+                                    <option value="dark" {{ 'selected' if company.theme_mode == 'dark' else '' }}>Dark</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Primary Color</label>
+                                <input type="color" name="primary_color" class="form-control form-control-color w-100" value="{{ company.primary_color or '#4F46E5' }}">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Secondary Color</label>
+                                <input type="color" name="secondary_color" class="form-control form-control-color w-100" value="{{ company.secondary_color or '#10B981' }}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Font Family</label>
+                                <select name="font_family" class="form-select">
+                                    <option value="Inter" {{ 'selected' if company.font_family == 'Inter' else '' }}>Inter</option>
+                                    <option value="Roboto" {{ 'selected' if company.font_family == 'Roboto' else '' }}>Roboto</option>
+                                    <option value="Poppins" {{ 'selected' if company.font_family == 'Poppins' else '' }}>Poppins</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Card Theme</label>
+                                <select name="card_theme" class="form-select">
+                                    <option value="modern" {{ 'selected' if company.card_theme == 'modern' else '' }}>Modern</option>
+                                    <option value="classic" {{ 'selected' if company.card_theme == 'classic' else '' }}>Classic</option>
+                                    <option value="minimal" {{ 'selected' if company.card_theme == 'minimal' else '' }}>Minimal</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a href="{{ url_for('master.view_company', id=company.id) }}" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Terms & Conditions - {{ company.name }}{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">Terms & Conditions</h1>
+    <div class="content">{{ company.terms_conditions|safe if company.terms_conditions else 'Terms and conditions coming soon.' }}</div>
+</div>
+{% endblock %}

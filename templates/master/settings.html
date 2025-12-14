@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}Platform Settings{% endblock %}
+{% block content %}
+<div class="container py-4">
+    <h2 class="mb-4">Platform Settings</h2>
+    <form method="post">
+        <div class="card mb-4">
+            <div class="card-header">General Settings</div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Platform Name</label>
+                        <input type="text" name="platform_name" class="form-control" value="{{ settings.platform_name or '' }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Tagline</label>
+                        <input type="text" name="platform_tagline" class="form-control" value="{{ settings.platform_tagline or '' }}">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Master Name</label>
+                        <input type="text" name="master_name" class="form-control" value="{{ settings.master_name or '' }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Homepage URL</label>
+                        <input type="url" name="master_homepage_url" class="form-control" value="{{ settings.master_homepage_url or '' }}">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Footer Text</label>
+                    <input type="text" name="master_footer" class="form-control" value="{{ settings.master_footer or '' }}">
+                </div>
+            </div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-header">Content</div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Homepage Content</label>
+                    <textarea name="homepage_content" class="form-control" rows="4">{{ settings.homepage_content or '' }}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">About Content</label>
+                    <textarea name="about_content" class="form-control" rows="4">{{ settings.about_content or '' }}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Features Content</label>
+                    <textarea name="features_content" class="form-control" rows="4">{{ settings.features_content or '' }}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Privacy Policy</label>
+                    <textarea name="privacy_policy" class="form-control" rows="4">{{ settings.privacy_policy or '' }}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Terms & Conditions</label>
+                    <textarea name="terms_conditions" class="form-control" rows="4">{{ settings.terms_conditions or '' }}</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-header">Showcase Settings</div>
+            <div class="card-body">
+                <div class="form-check mb-3">
+                    <input type="checkbox" name="showcase_enabled" class="form-check-input" id="showcase_enabled" {{ 'checked' if settings.showcase_enabled else '' }}>
+                    <label class="form-check-label" for="showcase_enabled">Enable Showcase</label>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="form-label">Showcase Title</label>
+                        <input type="text" name="showcase_title" class="form-control" value="{{ settings.showcase_title or '' }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Showcase Description</label>
+                        <input type="text" name="showcase_description" class="form-control" value="{{ settings.showcase_description or '' }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Settings</button>
+    </form>
+</div>
+{% endblock %}

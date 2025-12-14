@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Edit Card{% endblock %}
+{% block content %}
+<div class="container py-4">
+    <div class="card">
+        <div class="card-header"><h4 class="mb-0">Edit Visiting Card</h4></div>
+        <div class="card-body">
+            <form method="post">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" name="name" class="form-control" value="{{ card.name }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Designation</label>
+                        <input type="text" name="designation" class="form-control" value="{{ card.designation or '' }}">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" name="phone" class="form-control" value="{{ card.phone }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">WhatsApp</label>
+                        <input type="tel" name="whatsapp" class="form-control" value="{{ card.whatsapp or '' }}">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" value="{{ card.email or '' }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Address</label>
+                        <input type="text" name="address" class="form-control" value="{{ card.address or '' }}">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Bio</label>
+                    <textarea name="bio" class="form-control" rows="3">{{ card.bio or '' }}</textarea>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Theme</label>
+                        <select name="theme" class="form-select">
+                            <option value="modern" {{ 'selected' if card.theme == 'modern' else '' }}>Modern</option>
+                            <option value="classic" {{ 'selected' if card.theme == 'classic' else '' }}>Classic</option>
+                            <option value="minimal" {{ 'selected' if card.theme == 'minimal' else '' }}>Minimal</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Background Color</label>
+                        <input type="color" name="background_color" class="form-control form-control-color w-100" value="{{ card.background_color or '#ffffff' }}">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Text Color</label>
+                        <input type="color" name="text_color" class="form-control form-control-color w-100" value="{{ card.text_color or '#000000' }}">
+                    </div>
+                </div>
+                <div class="form-check mb-3">
+                    <input type="checkbox" name="is_active" class="form-check-input" id="is_active" {{ 'checked' if card.is_active else '' }}>
+                    <label class="form-check-label" for="is_active">Active</label>
+                </div>
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a href="{{ url_for('company.cards') }}" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
